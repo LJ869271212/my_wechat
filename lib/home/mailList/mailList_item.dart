@@ -39,7 +39,7 @@ class MailListItem extends StatelessWidget {
       children: <Widget>[
         Container(
           padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-          height: 45,
+          height: Constants.MailItemHeight,
           child: Row(
             children: <Widget>[
               ClipRRect(
@@ -102,7 +102,7 @@ class MailListItem extends StatelessWidget {
               Expanded(
                 child: Container(
                   alignment: Alignment.centerLeft,
-                  height: 20,
+                  height: Constants.MailGroupHeight,
                   color: Color(AppColors.DeviceInfoItemBg),
                   child: Text(
                     bean.nameIndex,

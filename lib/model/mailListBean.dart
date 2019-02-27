@@ -38,6 +38,91 @@ class MailListData {
 
   static List<MailListBean> beans = [
     MailListBean(
+      avatar: 'https://randomuser.me/api/portraits/men/93.jpg',
+      name: 'Zverett Lambert',
+      nameIndex: "Z",
+    ),
+    MailListBean(
+      avatar: 'https://randomuser.me/api/portraits/women/59.jpg',
+      name: 'Yally Dixon',
+      nameIndex: "Y",
+    ),
+    MailListBean(
+      avatar: 'https://randomuser.me/api/portraits/women/29.jpg',
+      name: 'Genesis Reid',
+      nameIndex: "X",
+    ),
+    MailListBean(
+      avatar: 'https://randomuser.me/api/portraits/men/83.jpg',
+      name: 'Uimmy Hansen',
+      nameIndex: "U",
+    ),
+    MailListBean(
+      avatar: 'https://randomuser.me/api/portraits/men/35.jpg',
+      name: 'Rdward Carlson',
+      nameIndex: "R",
+    ),
+    MailListBean(
+      avatar: 'https://randomuser.me/api/portraits/women/51.jpg',
+      name: 'Oilda George',
+      nameIndex: "O",
+    ),
+    MailListBean(
+      avatar: 'https://randomuser.me/api/portraits/men/27.jpg',
+      name: 'Niam Berry',
+      nameIndex: "N",
+    ),
+    MailListBean(
+      avatar: 'https://randomuser.me/api/portraits/men/6.jpg',
+      name: 'Iayne Cox',
+      nameIndex: "I",
+    ),
+    MailListBean(
+      avatar: 'https://randomuser.me/api/portraits/women/31.jpg',
+      name: 'Glenda Oliver',
+      nameIndex: "G",
+    ),
+    MailListBean(
+      avatar: 'https://randomuser.me/api/portraits/men/48.jpg',
+      name: 'Harry Fisher',
+      nameIndex: "H",
+    ),
+    MailListBean(
+      avatar: 'https://randomuser.me/api/portraits/women/42.jpg',
+      name: 'Violet Rice',
+      nameIndex: "V",
+    ),
+    MailListBean(
+      avatar: 'https://randomuser.me/api/portraits/men/95.jpg',
+      name: 'Daniel Turner',
+      nameIndex: "D",
+    ),
+    MailListBean(
+      avatar: 'https://randomuser.me/api/portraits/men/98.jpg',
+      name: 'Jeremy Fisher',
+      nameIndex: "J",
+    ),
+    MailListBean(
+      avatar: 'https://randomuser.me/api/portraits/men/14.jpg',
+      name: 'Wesley Howard',
+      nameIndex: "W",
+    ),
+    MailListBean(
+      avatar: 'https://randomuser.me/api/portraits/women/65.jpg',
+      name: 'Holly Burns',
+      nameIndex: "H",
+    ),
+    MailListBean(
+      avatar: 'https://randomuser.me/api/portraits/women/82.jpg',
+      name: 'Andre Romero',
+      nameIndex: "A",
+    ),
+    MailListBean(
+      avatar: 'https://randomuser.me/api/portraits/men/52.jpg',
+      name: 'Bernard Newman',
+      nameIndex: "B",
+    ),
+    MailListBean(
       avatar: 'https://randomuser.me/api/portraits/men/10.jpg',
       name: '汤姆丁',
       nameIndex: "T",

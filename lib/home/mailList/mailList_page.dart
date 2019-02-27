@@ -44,9 +44,10 @@ class _mialListPage extends State<MailListPage> {
     "Z"
   ];
   List<GlobalKey> _keys = List<GlobalKey>();
-  Map<String, GlobalKey> _indexMap = Map<String, GlobalKey>();
+  Map<String, int> _indexMap = Map<String, int>();
+  List<String> _indexList = List<String>();
   ScrollController _scrollController = new ScrollController();
-  GlobalKey _key;
+  Color _indexColor = Colors.transparent;
 
   //功能型数据
   List<MailListBean> functions = MailListData.functions;
@@ -58,8 +59,6 @@ class _mialListPage extends State<MailListPage> {
   Widget build(BuildContext context) {
     //索引宽度
     double indexWidth = 20;
-    //索引字体大小
-    double indexNameSize = 11;
     _indexName.forEach((name) {
       GlobalKey _key = GlobalKey();
       _keys.add(_key);
@@ -71,8 +70,8 @@ class _mialListPage extends State<MailListPage> {
           color: Color(AppColors.DeviceInfoItemBg),
           child: Listener(
             child: Container(
-              height: 30,
-              margin: EdgeInsets.all(10.0),
+              height: Constants.SearchHeight,
+              margin: EdgeInsets.all(Constants.SearchMargin),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(3), color: Colors.white),
               child: Row(
@@ -130,15 +129,13 @@ class _mialListPage extends State<MailListPage> {
                     isListEnd = true;
                   }
                 }
-                GlobalKey key = GlobalKey();
-//                if (bean.nameIndex != null && !isGroup) {
-//                  _indexMap[bean.nameIndex] = _key;
-//                  RenderBox listBox = _key.currentContext.findRenderObject();
-//                  Offset listOffset = listBox.localToGlobal(Offset.zero);
-//                  print(bean.nameIndex + "组" + listOffset.toString());
-//                }
+                //判断是组第一项
+                if (index >= 1 &&
+                    bean.nameIndex != items[index - 1].nameIndex) {
+                  _indexMap[bean.nameIndex] = index;
+                  _indexList.add(bean.nameIndex);
+                }
                 return MailListItem(
-                  key: key,
                   bean: bean,
                   isGroup: isGroup,
                   isGroupEnd: isGroupEnd,
@@ -157,13 +154,13 @@ class _mialListPage extends State<MailListPage> {
               child: GestureDetector(
                 child: Container(
                   width: indexWidth,
-                  color: Colors.black12,
+                  color: _indexColor,
                   child: Column(
                     children: List.generate(_indexName.length, (index) {
                       return Expanded(
                         child: Text(
                           _indexName[index],
-                          style: TextStyle(fontSize: indexNameSize),
+                          style: TextStyle(fontSize: Constants.indexNameSize),
                           key: _keys[index],
                         ),
                       );
@@ -171,28 +168,26 @@ class _mialListPage extends State<MailListPage> {
                   ),
                 ),
                 onPanDown: (DragDownDetails e) {
-                  print("手指按下了！！！！");
-                  print("按下=" + e.globalPosition.toString());
-                  for (int i = 0; i < _keys.length; i++) {
-                    //获取position
-                    RenderBox box = _keys[i].currentContext.findRenderObject();
-                    Offset offset = box.localToGlobal(Offset.zero);
-                    if (e.globalPosition.dy > offset.dy - indexNameSize / 2 &&
-                        e.globalPosition.dy < offset.dy + indexNameSize / 1.1) {
-                      print("索引=" + offset.toString());
-                      print("手指按下了" + _indexName[i].toString());
-                      Fluttertoast.showToast(msg: _indexName[i].toString());
-                      //滚动到指定组的位置
-//                      GlobalKey listKey = _indexMap[_indexName[i]];
-//                      RenderBox listBox =
-//                          listKey.currentContext.findRenderObject();
-//                      Offset listOffset = listBox.localToGlobal(Offset.zero);
-//                      print("滚动到=" + listOffset.toString());
-                      _scrollController.animateTo(30 + 45 * 4.0,
-                          duration: Duration(milliseconds: 500),
-                          curve: Curves.ease);
-                    }
-                  }
+                  setState(() {
+                    _indexColor = Colors.black12;
+                  });
+                  print("按下位置=" + e.globalPosition.toString());
+                  _animateTo(e.globalPosition.dy);
+                },
+                onPanUpdate: (DragUpdateDetails e){
+                  print("滑动位置=" + e.globalPosition.toString());
+                  _animateTo(e.globalPosition.dy);
+                },
+                onPanEnd: (DragEndDetails e){
+                  setState(() {
+                    _indexColor = Colors.transparent;
+                  });
+                  print("滑动结束");
+                },
+                onPanCancel: (){
+                  setState(() {
+                    _indexColor = Colors.transparent;
+                  });
                 },
               ),
             ),
@@ -200,5 +195,42 @@ class _mialListPage extends State<MailListPage> {
         ),
       ),
     );
+  }
+
+  void _animateTo(double dy){
+    for (int i = 0; i < _keys.length; i++) {
+      //获取position
+      RenderBox box = _keys[i].currentContext.findRenderObject();
+      Offset offset = box.localToGlobal(Offset.zero);
+      if (dy > offset.dy - Constants.indexNameSize / 2 &&
+          dy < offset.dy + Constants.indexNameSize / 1.1) {
+        String indexName = _indexName[i];
+        print("索引=" + offset.toString());
+        print("手指按下了" + indexName);
+        Fluttertoast.showToast(msg: indexName);
+        if(indexName == "↑"){
+          _scrollController.animateTo(0.0,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.ease);
+          return;
+        }
+        //滚动到指定组的位置
+        int index = _indexMap[indexName];
+        int count;
+        for (int j = 0; j < _indexList.length; j++) {
+          if (_indexList[j] == indexName) {
+            count = j;
+            break;
+          }
+        }
+        _scrollController.animateTo(
+            Constants.SearchHeight +
+                Constants.SearchMargin * 2 +
+                Constants.MailItemHeight * index +
+                count * Constants.MailGroupHeight,
+            duration: Duration(milliseconds: 300),
+            curve: Curves.ease);
+      }
+    }
   }
 }

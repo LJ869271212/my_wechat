@@ -66,4 +66,9 @@ class Constants {
   static const IndexLetterBoxSize = 114.0;
   static const IndexLetterBoxRadius = 4.0;
   static const SearchHeight = 35.0;
+  static const SearchMargin = 10.0;
+  static const MailItemHeight = 45.0;
+  static const MailGroupHeight = 20.0;
+  //索引字体大小
+  static const indexNameSize = 11.0;
 }
