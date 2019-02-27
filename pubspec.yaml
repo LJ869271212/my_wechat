@@ -71,6 +71,7 @@ flutter:
     - assets/images/qunliao.png
     - assets/images/weixinbiaoqian.png
     - assets/images/gongzhonghaotubiao.png
+    - assets/images/friendQuan.png
 
   fonts:
     - family: appIconFont

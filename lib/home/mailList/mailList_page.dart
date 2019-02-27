@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../model/constants.dart';
 import '../../model/mailListBean.dart' show MailListBean, MailListData;
 import 'mailList_item.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class MailListPage extends StatefulWidget {
   @override
