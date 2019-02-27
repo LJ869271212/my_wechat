@@ -38,6 +38,11 @@ class MailListData {
 
   static List<MailListBean> beans = [
     MailListBean(
+      avatar: 'https://randomuser.me/api/portraits/men/71.jpg',
+      name: 'Qax Reid',
+      nameIndex: "Q",
+    ),
+    MailListBean(
       avatar: 'https://randomuser.me/api/portraits/men/93.jpg',
       name: 'Zverett Lambert',
       nameIndex: "Z",

@@ -55,14 +55,47 @@ class _mialListPage extends State<MailListPage> {
   //联系人数据
   List<MailListBean> beans = MailListData.beans;
 
+  //联系人数据
+  List<MailListBean> items;
+  int _dy;
+  String _selectIndexName = "";
+  bool _isShowSelect = false;
+  double _IndexTop = 0.0;
+
   @override
-  Widget build(BuildContext context) {
-    //索引宽度
-    double indexWidth = 20;
+  void initState() {
+    super.initState();
+
     _indexName.forEach((name) {
       GlobalKey _key = GlobalKey();
       _keys.add(_key);
     });
+
+    //联系人数据
+    items = List<MailListBean>();
+    items.addAll(functions);
+    //联系人按照名称顺序排序
+    beans.sort((MailListBean a, MailListBean b) {
+      return a.nameIndex.compareTo(b.nameIndex);
+    });
+    items.addAll(beans);
+
+    for (int i = 0; i < items.length; i++) {
+      MailListBean bean = items[i];
+      //判断是组第一项,设置每一组的第一项位置，用于索引滑动
+      if (i > 0 && bean.nameIndex != items[i - 1].nameIndex) {
+        _indexMap[bean.nameIndex] = i;
+        _indexList.add(bean.nameIndex);
+      }
+    }
+    print(_indexMap.toString());
+    print(_indexList.toString());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    //索引宽度
+    double indexWidth = 20;
     //搜索
     Widget _search = Column(
       children: <Widget>[
@@ -93,14 +126,6 @@ class _mialListPage extends State<MailListPage> {
       ],
     );
 
-    //联系人数据
-    List<MailListBean> items = List<MailListBean>();
-    items.addAll(functions);
-    //联系人按照名称顺序排序
-    beans.sort((MailListBean a, MailListBean b) {
-      return a.nameIndex.compareTo(b.nameIndex);
-    });
-    items.addAll(beans);
     return Scaffold(
       body: Container(
         color: Colors.white,
@@ -129,12 +154,6 @@ class _mialListPage extends State<MailListPage> {
                     isListEnd = true;
                   }
                 }
-                //判断是组第一项
-                if (index >= 1 &&
-                    bean.nameIndex != items[index - 1].nameIndex) {
-                  _indexMap[bean.nameIndex] = index;
-                  _indexList.add(bean.nameIndex);
-                }
                 return MailListItem(
                   bean: bean,
                   isGroup: isGroup,
@@ -146,6 +165,35 @@ class _mialListPage extends State<MailListPage> {
               itemCount: items.length + 1,
               controller: _scrollController,
             ),
+            //显示选中的indexName
+            _isShowSelect
+                ? Positioned(
+                    right: 50,
+                    top: _IndexTop - 100.0,
+                    child: Container(
+                      alignment: Alignment.center,
+                      width: 50,
+                      height: 50,
+                      child: Stack(
+                        children: <Widget>[
+                          Center(
+                            child: Icon(
+                              IconData(0xe93b,
+                                  fontFamily: Constants.IconFontFamily),
+                              color: Colors.black12,
+                              size: 50,
+                            ),
+                          ),
+                          Center(
+                            child: Text(_selectIndexName,
+                                style: TextStyle(
+                                    fontSize: 30, color: Colors.white)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : Container(),
             //索引数据
             Positioned(
               top: 50,
@@ -170,24 +218,31 @@ class _mialListPage extends State<MailListPage> {
                 onPanDown: (DragDownDetails e) {
                   setState(() {
                     _indexColor = Colors.black12;
+                    _isShowSelect = true;
                   });
                   print("按下位置=" + e.globalPosition.toString());
-                  _animateTo(e.globalPosition.dy);
+                  _animateTo(e.globalPosition.dy.toInt());
                 },
-                onPanUpdate: (DragUpdateDetails e){
-                  print("滑动位置=" + e.globalPosition.toString());
-                  _animateTo(e.globalPosition.dy);
+                onPanUpdate: (DragUpdateDetails e) {
+                  if (_dy != e.globalPosition.dy.toInt()) {
+                    print("滑动位置=" + e.globalPosition.toString());
+                    _dy = e.globalPosition.dy.toInt();
+                    _animateTo(e.globalPosition.dy.toInt());
+                  }
                 },
-                onPanEnd: (DragEndDetails e){
+                onPanEnd: (DragEndDetails e) {
                   setState(() {
                     _indexColor = Colors.transparent;
+                    _isShowSelect = false;
                   });
                   print("滑动结束");
                 },
-                onPanCancel: (){
+                onPanCancel: () {
                   setState(() {
                     _indexColor = Colors.transparent;
+                    _isShowSelect = false;
                   });
+                  print("滑动Cancel");
                 },
               ),
             ),
@@ -197,21 +252,25 @@ class _mialListPage extends State<MailListPage> {
     );
   }
 
-  void _animateTo(double dy){
+  void _animateTo(int dy) {
     for (int i = 0; i < _keys.length; i++) {
       //获取position
       RenderBox box = _keys[i].currentContext.findRenderObject();
       Offset offset = box.localToGlobal(Offset.zero);
-      if (dy > offset.dy - Constants.indexNameSize / 2 &&
-          dy < offset.dy + Constants.indexNameSize / 1.1) {
+      bool isOffset = dy > offset.dy - Constants.indexNameSize / 2 &&
+          dy < offset.dy + Constants.indexNameSize / 1.1;
+      if (isOffset) {
         String indexName = _indexName[i];
         print("索引=" + offset.toString());
         print("手指按下了" + indexName);
-        Fluttertoast.showToast(msg: indexName);
-        if(indexName == "↑"){
+//        Fluttertoast.showToast(msg: indexName);
+        setState(() {
+          _selectIndexName = indexName;
+          _IndexTop = offset.dy;
+        });
+        if (indexName == "↑") {
           _scrollController.animateTo(0.0,
-              duration: Duration(milliseconds: 300),
-              curve: Curves.ease);
+              duration: Duration(milliseconds: 300), curve: Curves.ease);
           return;
         }
         //滚动到指定组的位置
