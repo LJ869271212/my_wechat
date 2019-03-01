@@ -14,19 +14,47 @@ class _FindPage extends State<FindPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.black12,
-        child: Column(
+        color: Color(AppColors.DeviceInfoItemBg),
+        child: ListView(
           children: <Widget>[
-            _findItem(),
+            _findItem(picName: "assets/images/friendQuan.png", text: "朋友圈"),
+            Container(
+              height: 8,
+            ),
+            _findItem(picName: "assets/images/saoyisao.png", text: "扫一扫"),
+            _grayLine(),
+            _findItem(picName: "assets/images/yaoyiyao.png", text: "摇一摇"),
+            Container(
+              height: 8,
+            ),
+            _findItem(picName: "assets/images/kanyikan.png", text: "看一看"),
+            _grayLine(),
+            _findItem(picName: "assets/images/souyisou.png", text: "搜一搜"),
+            Container(
+              height: 8,
+            ),
+            _findItem(picName: "assets/images/fujinderen.png", text: "附近的人"),
+            _grayLine(),
+            _findItem(picName: "assets/images/piaoliuping.png", text: "漂流瓶"),
+            Container(
+              height: 8,
+            ),
+            _findItem(picName: "assets/images/gouwu.png", text: "购物"),
+            _grayLine(),
+            _findItem(picName: "assets/images/youxi.png", text: "游戏"),
+            Container(
+              height: 8,
+            ),
+            _findItem(picName: "assets/images/xiaochengxu.png", text: "小程序"),
           ],
         ),
       ),
     );
   }
 
-  Widget _findItem() {
+  Widget _findItem({String picName, String text}) {
     return Container(
-      height: 45,
+      height: 42,
       color: Colors.white,
       child: FlatButton(
         padding: EdgeInsets.all(0),
@@ -36,7 +64,7 @@ class _FindPage extends State<FindPage> {
               width: 10.0,
             ),
             Image.asset(
-              "assets/images/friendQuan.png",
+              picName,
               width: 20,
               height: 20,
             ),
@@ -44,7 +72,7 @@ class _FindPage extends State<FindPage> {
               width: 15.0,
             ),
             Expanded(
-              child: Text("朋友圈"),
+              child: Text(text),
             ),
             Icon(IconData(0xe670, fontFamily: Constants.IconFontFamily),
                 size: 15.0, color: Colors.black38),
@@ -52,6 +80,22 @@ class _FindPage extends State<FindPage> {
         ),
         onPressed: () {},
       ),
+    );
+  }
+
+  Widget _grayLine() {
+    return Row(
+      children: <Widget>[
+        Container(
+          width: 45,
+          color: Colors.white,
+          height: 1,
+        ),
+        Container(
+          height: 1,
+          color: Color(AppColors.DeviceInfoItemBg),
+        ),
+      ],
     );
   }
 }

@@ -57,7 +57,7 @@ class AppStyles {
 
 class Constants {
   static const IconFontFamily = "appIconFont";
-  static const ConversationAvatarSize = 48.0;
+  static const ConversationAvatarSize = 33.0;
   static const DividerWidth = 1.0;
   static const UnReadMsgNotifyDotSize = 20.0;
   static const ConversationMuteIconSize = 18.0;

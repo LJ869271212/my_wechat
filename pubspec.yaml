@@ -72,6 +72,22 @@ flutter:
     - assets/images/weixinbiaoqian.png
     - assets/images/gongzhonghaotubiao.png
     - assets/images/friendQuan.png
+    - assets/images/xiaochengxu.png
+    - assets/images/gouwu.png
+    - assets/images/youxi.png
+    - assets/images/piaoliuping.png
+    - assets/images/fujinderen.png
+    - assets/images/souyisou.png
+    - assets/images/kanyikan.png
+    - assets/images/yaoyiyao.png
+    - assets/images/saoyisao.png
+    - assets/images/biaoqing.png
+    - assets/images/kabao.png
+    - assets/images/shezhi.png
+    - assets/images/shoucang.png
+    - assets/images/xinagce.png
+    - assets/images/zhifu.png
+    - assets/images/erweima.png
 
   fonts:
     - family: appIconFont

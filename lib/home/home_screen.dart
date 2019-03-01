@@ -6,6 +6,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:my_wechat/home/mailList/mailList_page.dart';
 import 'find/find_page.dart';
+import 'me/me_page.dart';
 
 enum ActionItems { GROUP_CHAT, ADD_FRIEND, QR_SCAN, PAYMENT, HELP }
 
@@ -61,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ConverstationPage(),
       MailListPage(),
       FindPage(),
-      Container(color: Colors.blueGrey),
+      MePage(),
     ];
   }
 
