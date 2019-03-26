@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../model/constants.dart' show AppColors, AppStyles, Constants;
 import 'package:flutter/cupertino.dart';
-import 'converstation_page.dart';
+import 'package:my_wechat/home/chat/converstation_page.dart';
 
 class SearchPage extends StatefulWidget {
   @override

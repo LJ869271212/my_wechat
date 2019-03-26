@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import '../model/constants.dart' show AppColors, AppStyles, Constants;
-import '../model/conversation.dart'
+import 'package:my_wechat/home/chat/talk/talk_page.dart';
+import '../../model/constants.dart' show AppColors, AppStyles, Constants;
+import '../../model/conversation.dart'
     show Conversation, Device, ConversationPageData;
-import './search_page.dart';
+import '../search_page.dart';
 
 ///微信会话列表项
 class _ConverstationItem extends StatelessWidget {
@@ -64,34 +65,41 @@ class _ConverstationItem extends StatelessWidget {
       avatarContainer = avatar;
     }
 
-    return Container(
-      padding: const EdgeInsets.all(10.0),
-      decoration: BoxDecoration(
-        color: Color(AppColors.ConversationItemBg),
-        border: Border(
-          bottom: BorderSide(
-            color: Color(AppColors.DividerColor),
-            width: Constants.DividerWidth,
-          ),
-        ),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          avatarContainer,
-          Container(width: 10.0),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(conversation.title, style: AppStyles.TitleStyle),
-                Text(conversation.title, style: AppStyles.TitleStyle)
-              ],
+    return FlatButton(
+      padding: EdgeInsets.all(0),
+      color: Colors.white,
+      child: Container(
+        padding: const EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              width: Constants.DividerWidth,
             ),
           ),
-          Container(width: 10.0),
-        ],
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            avatarContainer,
+            Container(width: 10.0),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(conversation.title, style: AppStyles.TitleStyle),
+                  Text(conversation.title, style: AppStyles.TitleStyle)
+                ],
+              ),
+            ),
+            Container(width: 10.0),
+          ],
+        ),
       ),
+      onPressed: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context){
+          return TalkPage(name: conversation.title);
+        },),);
+      },
     );
   }
 }

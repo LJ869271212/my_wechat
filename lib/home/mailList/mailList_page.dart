@@ -3,6 +3,7 @@ import '../../model/constants.dart';
 import '../../model/mailListBean.dart' show MailListBean, MailListData;
 import 'mailList_item.dart';
 
+///通讯录
 class MailListPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {

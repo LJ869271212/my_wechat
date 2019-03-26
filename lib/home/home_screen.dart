@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_wechat/model/constants.dart' show Constants, AppColors;
-import 'converstation_page.dart';
+import 'package:my_wechat/home/chat/converstation_page.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
