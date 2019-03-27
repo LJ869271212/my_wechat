@@ -97,7 +97,7 @@ class _ConverstationItem extends StatelessWidget {
       ),
       onPressed: (){
         Navigator.push(context, MaterialPageRoute(builder: (context){
-          return TalkPage(name: conversation.title);
+          return TalkPage(conversation: conversation);
         },),);
       },
     );
